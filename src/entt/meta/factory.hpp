@@ -16,7 +16,7 @@
 #include "../core/type_traits.hpp"
 #include "../locator/locator.hpp"
 #include "context.hpp"
-#include "fwd.hpp"
+#include "fwd.hpp" // IWYU pragma: export
 #include "meta.hpp"
 #include "node.hpp"
 #include "policy.hpp"

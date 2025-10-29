@@ -8,7 +8,7 @@
 #include <vector>
 #include "../config/config.h"
 #include "../core/compressed_pair.hpp"
-#include "fwd.hpp"
+#include "fwd.hpp" // IWYU pragma: export
 #include "process.hpp"
 
 namespace entt {

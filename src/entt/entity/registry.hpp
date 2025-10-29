@@ -22,7 +22,7 @@
 #include "../core/type_traits.hpp"
 #include "../core/utility.hpp"
 #include "entity.hpp"
-#include "fwd.hpp"
+#include "fwd.hpp" // IWYU pragma: export
 #include "group.hpp"
 #include "mixin.hpp"
 #include "sparse_set.hpp"

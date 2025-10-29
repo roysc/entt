@@ -8,7 +8,7 @@
 #include "../core/type_info.hpp"
 #include "../signal/sigh.hpp"
 #include "entity.hpp"
-#include "fwd.hpp"
+#include "fwd.hpp" // IWYU pragma: export
 
 namespace entt {
 

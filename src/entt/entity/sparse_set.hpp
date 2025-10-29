@@ -13,7 +13,7 @@
 #include "../core/bit.hpp"
 #include "../core/type_info.hpp"
 #include "entity.hpp"
-#include "fwd.hpp"
+#include "fwd.hpp" // IWYU pragma: export
 
 namespace entt {
 

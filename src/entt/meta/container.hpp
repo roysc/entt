@@ -18,7 +18,7 @@
 #include "../container/dense_set.hpp"
 #include "../core/type_traits.hpp"
 #include "context.hpp"
-#include "fwd.hpp"
+#include "fwd.hpp" // IWYU pragma: export
 #include "meta.hpp"
 #include "type_traits.hpp"
 

@@ -6,7 +6,7 @@
 #
 #    if defined(__cpp_lib_ranges)
 #        include <ranges>
-#        include "fwd.hpp"
+#        include "fwd.hpp" // IWYU pragma: export
 
 template<class... Args>
 inline constexpr bool std::ranges::enable_borrowed_range<entt::basic_view<Args...>>{true};

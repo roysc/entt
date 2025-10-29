@@ -17,7 +17,7 @@
 #include "../locator/locator.hpp"
 #include "adl_pointer.hpp"
 #include "context.hpp"
-#include "fwd.hpp"
+#include "fwd.hpp" // IWYU pragma: export
 #include "node.hpp"
 #include "range.hpp"
 #include "type_traits.hpp"

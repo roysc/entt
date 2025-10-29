@@ -5,7 +5,7 @@
 #include "../container/dense_map.hpp"
 #include "../core/fwd.hpp"
 #include "../core/utility.hpp"
-#include "fwd.hpp"
+#include "fwd.hpp" // IWYU pragma: export
 
 namespace entt {
 

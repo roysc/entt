@@ -15,7 +15,7 @@
 #include "../core/type_info.hpp"
 #include "component.hpp"
 #include "entity.hpp"
-#include "fwd.hpp"
+#include "fwd.hpp" // IWYU pragma: export
 #include "sparse_set.hpp"
 
 namespace entt {

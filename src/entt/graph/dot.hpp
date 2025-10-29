@@ -3,7 +3,7 @@
 
 #include <ostream>
 #include <type_traits>
-#include "fwd.hpp"
+#include "fwd.hpp" // IWYU pragma: export
 
 namespace entt {
 

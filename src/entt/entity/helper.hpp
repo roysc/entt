@@ -7,7 +7,7 @@
 #include "../core/fwd.hpp"
 #include "../core/type_traits.hpp"
 #include "component.hpp"
-#include "fwd.hpp"
+#include "fwd.hpp" // IWYU pragma: export
 #include "group.hpp"
 #include "storage.hpp"
 #include "view.hpp"

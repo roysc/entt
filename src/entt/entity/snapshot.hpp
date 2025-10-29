@@ -11,7 +11,7 @@
 #include "../container/dense_map.hpp"
 #include "../core/type_traits.hpp"
 #include "entity.hpp"
-#include "fwd.hpp"
+#include "fwd.hpp" // IWYU pragma: export
 #include "view.hpp"
 
 namespace entt {
