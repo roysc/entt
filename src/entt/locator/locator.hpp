@@ -68,7 +68,7 @@ public:
      *
      * @return A reference to the service currently set, if any.
      */
-    [[nodiscard]] static Service &value() noexcept {
+    [[nodiscard]] static Service &value() ENTT_NOEXCEPT {
         ENTT_ASSERT(has_value(), "Service not available");
         return *service;
     }

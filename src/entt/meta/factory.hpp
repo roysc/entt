@@ -32,7 +32,7 @@ namespace internal {
 class basic_meta_factory {
     using invoke_type = std::remove_pointer_t<decltype(meta_func_node::invoke)>;
 
-    [[nodiscard]] auto &fetch_node() noexcept {
+    [[nodiscard]] auto &fetch_node() ENTT_NOEXCEPT {
         return *meta_context::from(*ctx).value[parent];
     }
 
@@ -54,7 +54,7 @@ class basic_meta_factory {
     }
 
 protected:
-    void type(const id_type id, const char *name) noexcept {
+    void type(const id_type id, const char *name) ENTT_NOEXCEPT {
         reset_bucket(parent);
         auto &elem = fetch_node();
         ENTT_ASSERT(elem.id == id || !resolve(*ctx, id), "Duplicate identifier");

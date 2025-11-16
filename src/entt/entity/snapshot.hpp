@@ -187,7 +187,7 @@ public:
      * @brief Constructs an instance that is bound to a given registry.
      * @param source A valid reference to a registry.
      */
-    basic_snapshot_loader(registry_type &source) noexcept
+    basic_snapshot_loader(registry_type &source) ENTT_NOEXCEPT
         : reg{&source} {
         // restoring a snapshot as a whole requires a clean registry
         ENTT_ASSERT(reg->template storage<entity_type>().free_list() == 0u, "Registry must be empty");

@@ -95,7 +95,7 @@ public:
      * @return This emitter.
      */
     emitter &operator=(emitter &&other) noexcept {
-        ENTT_ASSERT(alloc_traits::is_always_equal::value || handlers.second() == other.handlers.second(), "Copying an emitter is not allowed");
+        ENTT_ASSERT_NOEXCEPT(alloc_traits::is_always_equal::value || handlers.second() == other.handlers.second(), "Copying an emitter is not allowed");
         swap(other);
         return *this;
     }

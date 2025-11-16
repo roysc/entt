@@ -125,7 +125,7 @@ class basic_runtime_view {
     static_assert(std::is_same_v<typename alloc_traits::value_type, Type *>, "Invalid value type");
     using container_type = std::vector<Type *, Allocator>;
 
-    [[nodiscard]] auto offset() const noexcept {
+    [[nodiscard]] auto offset() const ENTT_NOEXCEPT {
         ENTT_ASSERT(!pools.empty(), "Invalid view");
         const auto &leading = *pools.front();
         return (leading.policy() == deletion_policy::swap_only) ? leading.free_list() : leading.size();

@@ -374,7 +374,7 @@ public:
     }
 
     /*! @copydoc any::info */
-    [[nodiscard]] inline meta_type type() const noexcept;
+    [[nodiscard]] inline meta_type type() const ENTT_NOEXCEPT;
 
     /**
      * @brief Invokes the underlying function, if possible.
@@ -772,7 +772,7 @@ struct meta_custom {
      * @tparam Type Type to which conversion is requested.
      */
     template<typename Type>
-    [[nodiscard]] operator Type &() const noexcept {
+    [[nodiscard]] operator Type &() const ENTT_NOEXCEPT {
         ENTT_ASSERT(static_cast<Type *>(*this) != nullptr, "Invalid type");
         return *static_cast<Type *>(node->value.get());
     }
@@ -783,7 +783,7 @@ private:
 
 /*! @brief Opaque wrapper for data members. */
 class meta_data {
-    [[nodiscard]] auto &node_or_assert() const noexcept {
+    [[nodiscard]] auto &node_or_assert() const ENTT_NOEXCEPT {
         ENTT_ASSERT(node != nullptr, "Invalid pointer to node");
         return *node;
     }
@@ -917,13 +917,13 @@ private:
  * @param rhs An object, either valid or not.
  * @return False if the objects refer to the same node, true otherwise.
  */
-[[nodiscard]] inline bool operator!=(const meta_data &lhs, const meta_data &rhs) noexcept {
+[[nodiscard]] inline bool operator!=(const meta_data &lhs, const meta_data &rhs) ENTT_NOEXCEPT {
     return !(lhs == rhs);
 }
 
 /*! @brief Opaque wrapper for member functions. */
 class meta_func {
-    [[nodiscard]] auto &node_or_assert() const noexcept {
+    [[nodiscard]] auto &node_or_assert() const ENTT_NOEXCEPT {
         ENTT_ASSERT(node != nullptr, "Invalid pointer to node");
         return *node;
     }
@@ -1532,7 +1532,7 @@ private:
     return !(lhs == rhs);
 }
 
-[[nodiscard]] inline meta_type meta_any::type() const noexcept {
+[[nodiscard]] inline meta_type meta_any::type() const ENTT_NOEXCEPT {
     return *this ? meta_type{*ctx, fetch_node()} : meta_type{};
 }
 

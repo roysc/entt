@@ -64,7 +64,7 @@ class basic_sigh_mixin final: public Type {
 
     static_assert(std::is_base_of_v<basic_registry_type, owner_type>, "Invalid registry type");
 
-    [[nodiscard]] auto &owner_or_assert() const noexcept {
+    [[nodiscard]] auto &owner_or_assert() const ENTT_NOEXCEPT {
         ENTT_ASSERT(owner != nullptr, "Invalid pointer to registry");
         return static_cast<owner_type &>(*owner);
     }
@@ -397,7 +397,7 @@ class basic_reactive_mixin final: public Type {
 
     static_assert(std::is_base_of_v<basic_registry_type, owner_type>, "Invalid registry type");
 
-    [[nodiscard]] auto &owner_or_assert() const noexcept {
+    [[nodiscard]] auto &owner_or_assert() const ENTT_NOEXCEPT {
         ENTT_ASSERT(owner != nullptr, "Invalid pointer to registry");
         return static_cast<owner_type &>(*owner);
     }

@@ -384,7 +384,7 @@ class sink<sigh<Ret(Args...), Allocator>> {
         }
     }
 
-    [[nodiscard]] auto &signal_or_assert() const noexcept {
+    [[nodiscard]] auto &signal_or_assert() const ENTT_NOEXCEPT {
         ENTT_ASSERT(signal != nullptr, "Invalid pointer to signal");
         return *signal;
     }
@@ -405,7 +405,7 @@ public:
      * @brief Returns false if at least a listener is connected to the sink.
      * @return True if the sink has no listeners connected, false otherwise.
      */
-    [[nodiscard]] bool empty() const noexcept {
+    [[nodiscard]] bool empty() const ENTT_NOEXCEPT {
         return signal_or_assert().calls.empty();
     }
 

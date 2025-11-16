@@ -183,7 +183,7 @@ class basic_sparse_set {
         return (page < sparse.size() && sparse[page]) ? (sparse[page] + fast_mod(pos, traits_type::page_size)) : nullptr;
     }
 
-    [[nodiscard]] auto &sparse_ref(const Entity entt) const {
+    [[nodiscard]] auto &sparse_ref(const Entity entt) const ENTT_NOEXCEPT {
         ENTT_ASSERT(sparse_ptr(entt), "Invalid element");
         const auto pos = entity_to_pos(entt);
         return sparse[pos_to_page(pos)][fast_mod(pos, traits_type::page_size)];
@@ -239,7 +239,7 @@ private:
     }
 
     virtual void swap_or_move([[maybe_unused]] const std::size_t lhs, [[maybe_unused]] const std::size_t rhs) {
-        ENTT_ASSERT((mode != deletion_policy::swap_only) || ((lhs < head) == (rhs < head)), "Cross swapping is not supported");
+        ENTT_ASSERT_NOEXCEPT((mode != deletion_policy::swap_only) || ((lhs < head) == (rhs < head)), "Cross swapping is not supported");
     }
 
 protected:
@@ -251,7 +251,7 @@ protected:
      * @param it An iterator to the element to pop.
      */
     void swap_only(const basic_iterator it) {
-        ENTT_ASSERT(mode == deletion_policy::swap_only, "Deletion policy mismatch");
+        ENTT_ASSERT_NOEXCEPT(mode == deletion_policy::swap_only, "Deletion policy mismatch");
         const auto pos = index(*it);
         bump(traits_type::next(*it));
         swap_at(pos, head -= (pos < head));
@@ -262,14 +262,14 @@ protected:
      * @param it An iterator to the element to pop.
      */
     void swap_and_pop(const basic_iterator it) {
-        ENTT_ASSERT(mode == deletion_policy::swap_and_pop, "Deletion policy mismatch");
+        ENTT_ASSERT_NOEXCEPT(mode == deletion_policy::swap_and_pop, "Deletion policy mismatch");
         auto &self = sparse_ref(*it);
         const auto entt = traits_type::to_entity(self);
         sparse_ref(packed.back()) = traits_type::combine(entt, traits_type::to_integral(packed.back()));
         packed[static_cast<size_type>(entt)] = packed.back();
         // unnecessary but it helps to detect nasty bugs
         // NOLINTNEXTLINE(bugprone-assert-side-effect)
-        ENTT_ASSERT((packed.back() = null, true), "");
+        ENTT_ASSERT_NOEXCEPT((packed.back() = null, true), "");
         // lazy self-assignment guard
         self = null;
         packed.pop_back();
@@ -280,7 +280,7 @@ protected:
      * @param it An iterator to the element to pop.
      */
     void in_place_pop(const basic_iterator it) {
-        ENTT_ASSERT(mode == deletion_policy::in_place, "Deletion policy mismatch");
+        ENTT_ASSERT_NOEXCEPT(mode == deletion_policy::in_place, "Deletion policy mismatch");
         const auto pos = entity_to_pos(std::exchange(sparse_ref(*it), null));
         packed[pos] = traits_type::combine(static_cast<typename traits_type::entity_type>(std::exchange(head, pos)), tombstone);
     }
@@ -484,7 +484,7 @@ public:
      * @return This sparse set.
      */
     basic_sparse_set &operator=(basic_sparse_set &&other) noexcept {
-        ENTT_ASSERT(alloc_traits::is_always_equal::value || get_allocator() == other.get_allocator(), "Copying a sparse set is not allowed");
+        ENTT_ASSERT_NOEXCEPT(alloc_traits::is_always_equal::value || get_allocator() == other.get_allocator(), "Copying a sparse set is not allowed");
         swap(other);
         return *this;
     }
@@ -530,7 +530,7 @@ public:
      * @brief Sets data on the free list whose meaning depends on the mode.
      * @param value Free list information that is mode dependent.
      */
-    void free_list(const size_type value) noexcept {
+    void free_list(const size_type value) ENTT_NOEXCEPT {
         ENTT_ASSERT((mode == deletion_policy::swap_only) && !(value > packed.size()), "Invalid value");
         head = value;
     }
@@ -748,7 +748,7 @@ public:
      * @param entt A valid identifier.
      * @return The position of the entity in the sparse set.
      */
-    [[nodiscard]] size_type index(const entity_type entt) const noexcept {
+    [[nodiscard]] size_type index(const entity_type entt) const ENTT_NOEXCEPT {
         ENTT_ASSERT(contains(entt), "Set does not contain entity");
         return entity_to_pos(sparse_ref(entt));
     }
@@ -758,7 +758,7 @@ public:
      * @param pos The position for which to return the entity.
      * @return The entity at specified location.
      */
-    [[nodiscard]] entity_type operator[](const size_type pos) const noexcept {
+    [[nodiscard]] entity_type operator[](const size_type pos) const ENTT_NOEXCEPT {
         ENTT_ASSERT(pos < packed.size(), "Index out of bounds");
         return packed[pos];
     }
@@ -996,7 +996,7 @@ public:
      * @param args Arguments to forward to the sort function object, if any.
      */
     template<typename Compare, typename Sort = std_sort, typename... Args>
-    void sort_n(const size_type length, Compare compare, Sort algo = Sort{}, Args &&...args) {
+    void sort_n(const size_type length, Compare compare, Sort algo = Sort{}, Args &&...args) ENTT_NOEXCEPT {
         ENTT_ASSERT((mode != deletion_policy::in_place) || (head == max_size), "Sorting with tombstones not allowed");
         ENTT_ASSERT(!(length > packed.size()), "Length exceeds the number of elements");
 
@@ -1050,7 +1050,7 @@ public:
      * @return An iterator past the last of the elements actually shared.
      */
     template<typename It>
-    iterator sort_as(It first, It last) {
+    iterator sort_as(It first, It last) ENTT_NOEXCEPT {
         ENTT_ASSERT((mode != deletion_policy::in_place) || (head == max_size), "Sorting with tombstones not allowed");
         const size_type len = (mode == deletion_policy::swap_only) ? head : packed.size();
         auto it = end() - static_cast<difference_type>(len);
@@ -1073,7 +1073,7 @@ public:
     void clear() {
         pop_all();
         // sanity check to avoid subtle issues due to storage classes
-        ENTT_ASSERT((compact(), size()) == 0u, "Non-empty set");
+        ENTT_ASSERT_NOEXCEPT((compact(), size()) == 0u, "Non-empty set");
         head = policy_to_head();
         packed.clear();
     }

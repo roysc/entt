@@ -193,7 +193,7 @@ public:
      * @return This dispatcher.
      */
     basic_dispatcher &operator=(basic_dispatcher &&other) noexcept {
-        ENTT_ASSERT(alloc_traits::is_always_equal::value || get_allocator() == other.get_allocator(), "Copying a dispatcher is not allowed");
+        ENTT_ASSERT_NOEXCEPT(alloc_traits::is_always_equal::value || get_allocator() == other.get_allocator(), "Copying a dispatcher is not allowed");
         swap(other);
         return *this;
     }

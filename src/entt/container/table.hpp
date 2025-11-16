@@ -174,7 +174,7 @@ public:
      */
     explicit basic_table(const Container &...container) noexcept
         : payload{container...} {
-        ENTT_ASSERT((((std::get<Container>(payload).size() * sizeof...(Container)) == (std::get<Container>(payload).size() + ...)) && ...), "Unexpected container size");
+        ENTT_ASSERT_NOEXCEPT((((std::get<Container>(payload).size() * sizeof...(Container)) == (std::get<Container>(payload).size() + ...)) && ...), "Unexpected container size");
     }
 
     /**
@@ -183,7 +183,7 @@ public:
      */
     explicit basic_table(Container &&...container) noexcept
         : payload{std::move(container)...} {
-        ENTT_ASSERT((((std::get<Container>(payload).size() * sizeof...(Container)) == (std::get<Container>(payload).size() + ...)) && ...), "Unexpected container size");
+        ENTT_ASSERT_NOEXCEPT((((std::get<Container>(payload).size() * sizeof...(Container)) == (std::get<Container>(payload).size() + ...)) && ...), "Unexpected container size");
     }
 
     /*! @brief Default copy constructor, deleted on purpose. */
@@ -214,7 +214,7 @@ public:
     template<class Allocator>
     basic_table(const Container &...container, const Allocator &allocator) noexcept
         : payload{Container{container, allocator}...} {
-        ENTT_ASSERT((((std::get<Container>(payload).size() * sizeof...(Container)) == (std::get<Container>(payload).size() + ...)) && ...), "Unexpected container size");
+        ENTT_ASSERT_NOEXCEPT((((std::get<Container>(payload).size() * sizeof...(Container)) == (std::get<Container>(payload).size() + ...)) && ...), "Unexpected container size");
     }
 
     /**
@@ -226,7 +226,7 @@ public:
     template<class Allocator>
     basic_table(Container &&...container, const Allocator &allocator) noexcept
         : payload{Container{std::move(container), allocator}...} {
-        ENTT_ASSERT((((std::get<Container>(payload).size() * sizeof...(Container)) == (std::get<Container>(payload).size() + ...)) && ...), "Unexpected container size");
+        ENTT_ASSERT_NOEXCEPT((((std::get<Container>(payload).size() * sizeof...(Container)) == (std::get<Container>(payload).size() + ...)) && ...), "Unexpected container size");
     }
 
     /**

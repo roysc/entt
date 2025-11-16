@@ -42,7 +42,7 @@ template<typename Type>
 template<typename Type>
 [[nodiscard]] constexpr std::enable_if_t<std::is_unsigned_v<Type>, Type> next_power_of_two(const Type value) noexcept {
     // NOLINTNEXTLINE(bugprone-assert-side-effect)
-    ENTT_ASSERT_CONSTEXPR(value < (Type{1u} << (std::numeric_limits<Type>::digits - 1)), "Numeric limits exceeded");
+    ENTT_ASSERT_NOEXCEPT(value < (Type{1u} << (std::numeric_limits<Type>::digits - 1)), "Numeric limits exceeded");
     Type curr = value - (value != 0u);
 
     for(int next = 1; next < std::numeric_limits<Type>::digits; next = next * 2) {
@@ -61,7 +61,7 @@ template<typename Type>
  */
 template<typename Type>
 [[nodiscard]] constexpr std::enable_if_t<std::is_unsigned_v<Type>, Type> fast_mod(const Type value, const std::size_t mod) noexcept {
-    ENTT_ASSERT_CONSTEXPR(has_single_bit(mod), "Value must be a power of two");
+    ENTT_ASSERT_NOEXCEPT(has_single_bit(mod), "Value must be a power of two");
     return static_cast<Type>(value & (mod - 1u));
 }
 

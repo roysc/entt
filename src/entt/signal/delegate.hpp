@@ -213,7 +213,7 @@ public:
      * @param function Function to connect to the delegate.
      * @param payload User defined arbitrary data.
      */
-    void connect(function_type *function, const void *payload = nullptr) noexcept {
+    void connect(function_type *function, const void *payload = nullptr) ENTT_NOEXCEPT {
         ENTT_ASSERT(function != nullptr, "Uninitialized function pointer");
         instance = payload;
         fn = function;

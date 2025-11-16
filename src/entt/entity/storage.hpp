@@ -318,7 +318,7 @@ private:
     void swap_or_move([[maybe_unused]] const std::size_t from, [[maybe_unused]] const std::size_t to) override {
         static constexpr bool is_pinned_type = !(std::is_move_constructible_v<Type> && std::is_move_assignable_v<Type>);
         // use a runtime value to avoid compile-time suppression that drives the code coverage tool crazy
-        ENTT_ASSERT((from + 1u) && !is_pinned_type, "Pinned type");
+        ENTT_ASSERT_NOEXCEPT((from + 1u) && !is_pinned_type, "Pinned type");
 
         if constexpr(!is_pinned_type) {
             if constexpr(traits_type::in_place_delete) {
@@ -462,7 +462,7 @@ public:
     basic_storage(basic_storage &&other, const allocator_type &allocator)
         : base_type{static_cast<base_type &&>(other), allocator},
           payload{std::move(other.payload), allocator} {
-        ENTT_ASSERT(alloc_traits::is_always_equal::value || get_allocator() == other.get_allocator(), "Copying a storage is not allowed");
+        ENTT_ASSERT_NOEXCEPT(alloc_traits::is_always_equal::value || get_allocator() == other.get_allocator(), "Copying a storage is not allowed");
     }
 
     /*! @brief Default destructor. */
@@ -483,7 +483,7 @@ public:
      * @return This storage.
      */
     basic_storage &operator=(basic_storage &&other) noexcept {
-        ENTT_ASSERT(alloc_traits::is_always_equal::value || get_allocator() == other.get_allocator(), "Copying a storage is not allowed");
+        ENTT_ASSERT_NOEXCEPT(alloc_traits::is_always_equal::value || get_allocator() == other.get_allocator(), "Copying a storage is not allowed");
         swap(other);
         return *this;
     }
@@ -884,7 +884,7 @@ public:
      *
      * @param entt A valid identifier.
      */
-    void get([[maybe_unused]] const entity_type entt) const noexcept {
+    void get([[maybe_unused]] const entity_type entt) const ENTT_NOEXCEPT {
         ENTT_ASSERT(base_type::contains(entt), "Invalid entity");
     }
 
@@ -893,7 +893,7 @@ public:
      * @param entt A valid identifier.
      * @return Returns an empty tuple.
      */
-    [[nodiscard]] std::tuple<> get_as_tuple([[maybe_unused]] const entity_type entt) const noexcept {
+    [[nodiscard]] std::tuple<> get_as_tuple([[maybe_unused]] const entity_type entt) const ENTT_NOEXCEPT {
         ENTT_ASSERT(base_type::contains(entt), "Invalid entity");
         return std::tuple{};
     }
@@ -918,7 +918,7 @@ public:
      * @param func Valid function objects.
      */
     template<typename... Func>
-    void patch([[maybe_unused]] const entity_type entt, Func &&...func) {
+    void patch([[maybe_unused]] const entity_type entt, Func &&...func) ENTT_NOEXCEPT {
         ENTT_ASSERT(base_type::contains(entt), "Invalid entity");
         (std::forward<Func>(func)(), ...);
     }
@@ -982,7 +982,7 @@ class basic_storage<Entity, Entity, Allocator>
     using underlying_iterator = typename basic_sparse_set<Entity, Allocator>::basic_iterator;
     using traits_type = entt_traits<Entity>;
 
-    auto from_placeholder() noexcept {
+    auto from_placeholder() ENTT_NOEXCEPT {
         const auto entt = traits_type::combine(static_cast<typename traits_type::entity_type>(placeholder), {});
         ENTT_ASSERT(entt != null, "No more entities available");
         placeholder += static_cast<size_type>(entt != null);
@@ -1114,7 +1114,7 @@ public:
      *
      * @param entt A valid identifier.
      */
-    void get([[maybe_unused]] const entity_type entt) const noexcept {
+    void get([[maybe_unused]] const entity_type entt) const ENTT_NOEXCEPT {
         ENTT_ASSERT(base_type::index(entt) < base_type::free_list(), "The requested entity is not a live one");
     }
 
@@ -1123,7 +1123,7 @@ public:
      * @param entt A valid identifier.
      * @return Returns an empty tuple.
      */
-    [[nodiscard]] std::tuple<> get_as_tuple([[maybe_unused]] const entity_type entt) const noexcept {
+    [[nodiscard]] std::tuple<> get_as_tuple([[maybe_unused]] const entity_type entt) const ENTT_NOEXCEPT {
         ENTT_ASSERT(base_type::index(entt) < base_type::free_list(), "The requested entity is not a live one");
         return std::tuple{};
     }
@@ -1181,7 +1181,7 @@ public:
      * @param func Valid function objects.
      */
     template<typename... Func>
-    void patch([[maybe_unused]] const entity_type entt, Func &&...func) {
+    void patch([[maybe_unused]] const entity_type entt, Func &&...func) ENTT_NOEXCEPT {
         ENTT_ASSERT(base_type::index(entt) < base_type::free_list(), "The requested entity is not a live one");
         (std::forward<Func>(func)(), ...);
     }

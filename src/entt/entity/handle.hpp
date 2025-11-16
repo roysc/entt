@@ -98,7 +98,7 @@ template<typename Registry, typename... Scope>
 class basic_handle {
     using traits_type = entt_traits<typename Registry::entity_type>;
 
-    [[nodiscard]] auto &owner_or_assert() const noexcept {
+    [[nodiscard]] auto &owner_or_assert() const ENTT_NOEXCEPT {
         ENTT_ASSERT(owner != nullptr, "Invalid pointer to registry");
         return static_cast<Registry &>(*owner);
     }

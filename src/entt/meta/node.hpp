@@ -52,7 +52,7 @@ template<typename Type>
 }
 
 template<typename Type>
-[[nodiscard]] auto user_to_meta_traits(const Type value) noexcept {
+[[nodiscard]] auto user_to_meta_traits(const Type value) ENTT_NOEXCEPT {
     static_assert(std::is_enum_v<Type>, "Invalid enum type");
     constexpr auto shift = popcount(static_cast<std::underlying_type_t<meta_traits>>(meta_traits::_user_defined_traits));
     const auto traits = static_cast<std::underlying_type_t<internal::meta_traits>>(static_cast<std::underlying_type_t<Type>>(value));

@@ -56,14 +56,21 @@
 #    define ENTT_ASSERT(condition, msg) (void(0))
 #elif !defined ENTT_ASSERT
 #    include <cassert>
-#    define ENTT_ASSERT(condition, msg) assert(((condition) && (msg)))
+#    define ENTT_ASSERT ENTT_ASSERT_NOEXCEPT
 #endif
 
 #ifdef ENTT_DISABLE_ASSERT
-#    undef ENTT_ASSERT_CONSTEXPR
-#    define ENTT_ASSERT_CONSTEXPR(condition, msg) (void(0))
-#elif !defined ENTT_ASSERT_CONSTEXPR
-#    define ENTT_ASSERT_CONSTEXPR(condition, msg) ENTT_ASSERT(condition, msg)
+#    undef ENTT_ASSERT_NOEXCEPT
+#    define ENTT_ASSERT_NOEXCEPT(condition, msg) (void(0))
+#elif !defined ENTT_ASSERT_NOEXCEPT
+#    include <cassert>
+#    define ENTT_ASSERT_NOEXCEPT(condition, msg) assert(((condition) && (msg)))
+#endif
+
+#if defined(ENTT_ASSERT_THROWS)
+#    define ENTT_NOEXCEPT
+#else
+#    define ENTT_NOEXCEPT noexcept
 #endif
 
 #define ENTT_FAIL(msg) ENTT_ASSERT(false, msg);

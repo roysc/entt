@@ -236,7 +236,7 @@ class basic_common_view {
     template<typename Return, typename View, typename Other, std::size_t... GLhs, std::size_t... ELhs, std::size_t... GRhs, std::size_t... ERhs>
     friend Return internal::view_pack(const View &, const Other &, std::index_sequence<GLhs...>, std::index_sequence<ELhs...>, std::index_sequence<GRhs...>, std::index_sequence<ERhs...>);
 
-    [[nodiscard]] auto offset() const noexcept {
+    [[nodiscard]] auto offset() const ENTT_NOEXCEPT {
         ENTT_ASSERT(index != Get, "Invalid view");
         return (pools[index]->policy() == deletion_policy::swap_only) ? pools[index]->free_list() : pools[index]->size();
     }
@@ -272,7 +272,7 @@ protected:
         return pools[pos];
     }
 
-    void pool_at(const std::size_t pos, const Type *elem) noexcept {
+    void pool_at(const std::size_t pos, const Type *elem) ENTT_NOEXCEPT {
         ENTT_ASSERT(elem != nullptr, "Unexpected element");
         pools[pos] = elem;
         refresh();
@@ -282,7 +282,7 @@ protected:
         return (filter[pos] == placeholder) ? nullptr : filter[pos];
     }
 
-    void filter_at(const std::size_t pos, const Type *elem) noexcept {
+    void filter_at(const std::size_t pos, const Type *elem) ENTT_NOEXCEPT {
         ENTT_ASSERT(elem != nullptr, "Unexpected element");
         filter[pos] = elem;
     }
@@ -687,7 +687,7 @@ protected:
     /*! @cond TURN_OFF_DOXYGEN */
     basic_storage_view() noexcept = default;
 
-    basic_storage_view(const Type *value) noexcept
+    basic_storage_view(const Type *value) ENTT_NOEXCEPT
         : leading{value} {
         ENTT_ASSERT(leading->policy() == Policy, "Unexpected storage policy");
     }

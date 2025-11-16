@@ -95,7 +95,7 @@ public:
      * @return This process scheduler.
      */
     basic_scheduler &operator=(basic_scheduler &&other) noexcept {
-        ENTT_ASSERT(alloc_traits::is_always_equal::value || get_allocator() == other.get_allocator(), "Copying a scheduler is not allowed");
+        ENTT_ASSERT_NOEXCEPT(alloc_traits::is_always_equal::value || get_allocator() == other.get_allocator(), "Copying a scheduler is not allowed");
         swap(other);
         return *this;
     }
