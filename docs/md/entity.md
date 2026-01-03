@@ -2340,12 +2340,11 @@ exception to the rule. It is true that views, groups and iterators in general
 are not thread safe by themselves. Because of this users should not try to
 iterate a set of components and modify the same set concurrently. However:
 
-* As long as a thread iterates the entities that have the component `X` or
-  assign and removes that component from a set of entities, another thread can
-  safely do the same with components `Y` and `Z` and everything work like just
-  fine. As a trivial example, users can freely execute the rendering system and
-  iterate the renderable entities while updating a physic component concurrently
-  on a separate thread.
+* As long as a thread iterates the entities with component `X` or assign and
+  remove that component from a set of entities, another thread can safely do the
+  same with components `Y` and `Z`. For example, users can freely
+  execute the rendering system and iterate the renderable entities while
+  updating a physics component concurrently on a separate thread.
 
 * Similarly, a single set of components can be iterated by multiple threads as
   long as the components are neither assigned nor removed in the meantime. In
